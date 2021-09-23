@@ -1,2 +1,4 @@
 # Smart Home
-test
+
+Welcome to smart home!
+wfewfewfw
