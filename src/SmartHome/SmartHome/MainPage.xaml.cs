@@ -6,19 +6,19 @@ namespace SmartHome
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
-
         public MainPage()
         {
             InitializeComponent();
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        private void OnTemparatureGetterClicked(object sender, EventArgs e)
         {
-            count++;
-            CounterLabel.Text = $"Current count: {count}";
+            var random = new Random();
+            Temparature.Text = $"Indoor: {random.Next(20, 25)}C";
+            Humidity.Text = $"Humidity: {random.Next(35, 45)}%";
 
-            SemanticScreenReader.Announce(CounterLabel.Text);
+            SemanticScreenReader.Announce(Temparature.Text);
+            SemanticScreenReader.Announce(Humidity.Text);
         }
     }
 }
