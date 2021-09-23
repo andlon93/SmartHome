@@ -110,8 +110,12 @@ namespace Thermometer
 
         private static async Task GetLatest()
         {
-            var measurement = await _netatmoService.GetLatestMeasurement();
-            Console.WriteLine(measurement.MeasureTime.ToLongTimeString() + " " + measurement.Temperature + " °C, " + measurement.Humidity + " %");
+            Console.WriteLine("Indoor");
+            var indoor = await _netatmoService.GetLatestMeasurementIndoor();
+            Console.WriteLine(indoor.MeasureTime.ToLongTimeString() + " " + indoor.Temperature + " °C, " + indoor.Humidity + " %");
+            Console.WriteLine("Outdoor");
+            var outdoor = await _netatmoService.GetLatestMeasurementOutdoor();
+            Console.WriteLine(outdoor.MeasureTime.ToLongTimeString() + " " + outdoor.Temperature + " °C, " + outdoor.Humidity + " %");
         }
     }
 }

@@ -22,8 +22,8 @@ namespace Thermometer.Netatmo
         public static Token CurrentToken;
 
         public string _indoorModule = "70:ee:50:35:df:88";
-        public string _indoorModule2 = "70:ee:50:2c:7b:62";
-        public string _outdoorModuleBerhardJr = "02:00:00:2c:96:5e";
+        public string _outdoorModule = "02:00:00:2c:96:5e";
+        //public string _indoorModule2 = "70:ee:50:2c:7b:62";
 
         public async Task Authorize()
         {
@@ -45,7 +45,6 @@ namespace Thermometer.Netatmo
         {
             var userName = "odalauten@gmail.com";
             var password = "D:hack2021";
-            var deviceID = _indoorModule;
             var values = new List<KeyValuePair<string, string>>
             {
                 new KeyValuePair<string, string>("client_id", _clientId),
@@ -94,6 +93,10 @@ namespace Thermometer.Netatmo
 
         public async Task<NetatmoMeasureResponse> GetMeasureAsync()
         {
+            return await GetMeasureAsync(_indoorModule, _outdoorModule);
+        }
+        public async Task<NetatmoMeasureResponse> GetMeasureAsync(string deviceId, string moduleId)
+        {
             if (CurrentToken == null)
             {
                 await Login();
@@ -105,8 +108,8 @@ namespace Thermometer.Netatmo
                 var values = new List<KeyValuePair<string, string>>
                 {
                     new KeyValuePair<string, string>("access_token", CurrentToken.AccessToken),
-                    new KeyValuePair<string, string>("device_id", _indoorModule),
-                    new KeyValuePair<string, string>("module_id", _outdoorModuleBerhardJr),
+                    new KeyValuePair<string, string>("device_id", deviceId),
+                    new KeyValuePair<string, string>("module_id", moduleId),
                     new KeyValuePair<string, string>("scale", "5min"),
                     //new KeyValuePair<string, string>("limit", "10"),
                     new KeyValuePair<string, string>("date_begin", DateTimeHelper.UtcDateTimeToTimeStamp(DateTime.UtcNow.AddMinutes(-100)).ToString()),
@@ -120,10 +123,20 @@ namespace Thermometer.Netatmo
             }
         }
 
-        public async Task<Measurement> GetLatestMeasurement()
+        public async Task<Measurement> GetLatestMeasurementIndoor()
+        {
+            return await GetLatestMeasurement(_indoorModule, _indoorModule);
+        }
+
+        public async Task<Measurement> GetLatestMeasurementOutdoor()
+        {
+            return await GetLatestMeasurement(_indoorModule, _outdoorModule);
+        }
+
+        public async Task<Measurement> GetLatestMeasurement(string deviceId, string moduleId)
         {
             var list = new List<Measurement>();
-            var response = await GetMeasureAsync();
+            var response = await GetMeasureAsync(deviceId, moduleId);
             foreach (var measureSet in response.Measurements)
             {
                 var time = measureSet.StartTime;
