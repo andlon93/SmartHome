@@ -2,7 +2,7 @@
 using Microsoft.Maui.Essentials;
 using System;
 
-namespace SmartHomeApp
+namespace SmartHome
 {
     public partial class MainPage : ContentPage
     {

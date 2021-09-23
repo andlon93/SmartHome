@@ -1,7 +1,7 @@
 ﻿using Foundation;
 using Microsoft.Maui;
 
-namespace SmartHomeApp
+namespace SmartHome
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

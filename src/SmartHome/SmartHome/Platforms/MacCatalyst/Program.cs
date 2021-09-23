@@ -1,6 +1,6 @@
 ﻿using UIKit;
 
-namespace SmartHomeApp
+namespace SmartHome
 {
     public class Program
     {

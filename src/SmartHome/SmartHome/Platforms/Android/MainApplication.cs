@@ -3,7 +3,7 @@ using Android.Runtime;
 using Microsoft.Maui;
 using System;
 
-namespace SmartHomeApp
+namespace SmartHome
 {
     [Application]
     public class MainApplication : MauiApplication
