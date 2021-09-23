@@ -1,8 +1,4 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-
-namespace Thermometer.Netatmo
+﻿namespace Thermometer.Netatmo
 {
     public static class Urls
     {

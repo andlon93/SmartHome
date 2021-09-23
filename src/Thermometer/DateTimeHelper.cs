@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
-using Thermometer.GitHub;
-using Thermometer.Netatmo;
 
 namespace Thermometer
 {
