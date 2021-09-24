@@ -1,0 +1,62 @@
+﻿@page "/netatmo"
+
+<PageTitle>Netatmo</PageTitle>
+
+@using SmartHomeWebApp.Data
+@using Thermometer.Netatmo
+@inject NetatmoService NetatmoService
+
+<style>
+    body {
+        background-color: #e6dcd3;
+    }
+    div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    #temperature {
+        font-size: 70px;
+    }
+</style>
+
+@if (indoorMeasurement == null || outdoorMeasurement == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div>
+        <p id="temperature">@(indoorMeasurement.Temperature + "°")</p>
+        <div>
+            @("Luftfuktighet: " + indoorMeasurement.Humidity + " %")
+            <break />
+            @(indoorMeasurement.MeasureTime.ToShortDateString() + " " + indoorMeasurement.MeasureTime.ToLongTimeString())
+            <break />
+            @("Trykk: " + indoorMeasurement.Pressure + " mb")
+            <break />
+            @("CO2: " + indoorMeasurement.CO2 + " ppm")
+            <break />
+            @("Lyd: " + indoorMeasurement.Noise + " dB")
+            <break />
+        </div>        
+        <div>
+            @("Temperatur: " + outdoorMeasurement.Temperature + "°")
+            <break />
+            @("Luftfuktighet: " + outdoorMeasurement.Humidity + " %")
+            <break />
+            @(outdoorMeasurement.MeasureTime.ToShortDateString() + " " + outdoorMeasurement.MeasureTime.ToLongTimeString())
+        </div>
+    </div>
+}
+
+@code {
+    private Measurement indoorMeasurement;
+    private Measurement outdoorMeasurement;
+
+    protected override async Task OnInitializedAsync()
+    {
+        indoorMeasurement = await NetatmoService.GetLatestMeasurementIndoor();
+        outdoorMeasurement = await NetatmoService.GetLatestMeasurementOutdoor();
+    }
+}
