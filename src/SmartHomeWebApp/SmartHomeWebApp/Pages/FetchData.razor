@@ -1,0 +1,42 @@
+﻿@page "/fetchdata"
+
+<PageTitle>Weather forecast</PageTitle>
+
+@using SmartHomeWebApp.Data
+@using Thermometer.Netatmo
+@inject NetatmoService NetatmoService
+
+<h1>Indoor climate</h1>
+
+@if (measurement == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Humidity. (%)</th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td>@measurement.MeasureTime.ToShortDateString()</td>
+                    <td>@measurement.Temperature</td>
+                    <td>@measurement.Humidity</td>
+                </tr>
+        </tbody>
+    </table>
+}
+
+@code {
+    private Measurement measurement;
+
+    protected override async Task OnInitializedAsync()
+    {
+        measurement = await NetatmoService.GetLatestMeasurementIndoor();
+    }
+}
