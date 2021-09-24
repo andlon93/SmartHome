@@ -1,4 +1,4 @@
-namespace SmartHomeWebApp.Data
+namespace SmartHomeWebApp.Data.Yr
 {
     public class WeatherForecast
     {
